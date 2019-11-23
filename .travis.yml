@@ -1,0 +1,13 @@
+language: python
+git:
+  depth: 3
+python:
+- '3.7'
+install:
+- pip install pipenv pylint
+- pipenv sync
+script:
+- python -m unittest tests
+- pylint imdb --exit-zero
+notifications:
+  irc: chat.freenode.net#bardiharborow
