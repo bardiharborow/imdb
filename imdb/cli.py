@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from . import api
 from . import models
@@ -9,7 +10,7 @@ class CLI:
         Start the command-line tool.
         """
         self.parse_arguments()
-        self.run()
+        self.search()
 
     def parse_arguments(self):
         """
@@ -19,8 +20,9 @@ class CLI:
         group = self.parser.add_mutually_exclusive_group(required=True)
         group.add_argument("--id", help="search by IMDb identifier")
         group.add_argument("--name", help="search by artist name")
-        self.parser.add_argument("--reverse", action="store_true", help="display filmography in reverse order")
-        self.parser.add_argument("--json", action="store_true", help="display filmography in machine-readable JSON")
+        self.parser.add_argument("-r", "--reverse", action="store_true", help="display filmography in reverse order")
+        self.parser.add_argument("-j", "--json", action="store_true", help="display filmography in machine-readable JSON")
+        self.parser.add_argument("-o", "--output", metavar="FILE", help="save filmography to a file")
         self.arguments = self.parser.parse_args()
 
     def choose(self, options):
@@ -57,31 +59,70 @@ class CLI:
         :param actor: The actor to print.
         """
         if self.arguments.json:
-            print(actor.json())
+            filmography = actor.json()
         else:
-            print(actor.long())
+            filmography = actor.long()
 
-    def run(self):
+        if self.arguments.output:
+            with open(self.arguments.output, "w") as file:
+                file.write(filmography)
+        else:
+            print(filmography)
+
+    def get_actor(self):
         """
-        Search for actors and filmographies based on provided arguments.
+        Fetch an actor based on provided arguments.
+
+        :returns: An Actor object.
         """
         if self.arguments.id:
-            # TODO: fetch details from id
-            actor = models.Actor(self.arguments.id, "", 0, "", [])
+            try:
+                # A slightly risky way to fetch name, rank and known for
+                actor = api.IMDb.actors(self.arguments.id)[0]
+
+                # IMDb often doesn't return rank for ID-based searches
+                if actor.rank == 0:
+                    # search for actor by name
+                    actors = api.IMDb.actors(actor.name)
+
+                    for act in actors:
+                        # find matching actor
+                        if actor.identifier == act.identifier:
+                            # return actor with rank instead
+                            return act
+
+                # rank present or lookup failed, returning original
+                return actor
+            except KeyError:
+                pass
+
         elif self.arguments.name:
             actors = api.IMDb.actors(self.arguments.name)
 
             if actors:
-                actor = self.choose(actors)
-            else:
-                print("No results found from IMDB.")
-        else:
-            # never reached as argparse will throw first
-            raise RuntimeError("No search target provided.")
+                return self.choose(actors)
 
+        else:
+            # reached only for arguments like --name ""
+            # argparse will throw before here for missing arguments
+            print("No search target provided.")
+            sys.exit(2) # command line error
+
+        print("No results found from IMDB.")
+        sys.exit(1) # unsuccessful
+
+    def search(self):
+        """
+        Search for actors and filmographies based on provided arguments.
+        """
+        actor = self.get_actor()
+
+        # fetch filmography
         actor.filmography = api.IMDb.actor(actor.identifier)
 
-        if self.arguments.reverse:
+        # IMDb returns newest first by default
+        if not self.arguments.reverse:
             actor.filmography.reverse()
 
+        # display actor and filmography details
         self.display(actor)

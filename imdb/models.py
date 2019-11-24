@@ -39,7 +39,7 @@ class Actor:
         # see <https://help.imdb.com/article/imdb/discover-watch/what-do-the-roman-numerals-like-i-and-ii-after-people-s-names-mean/GA827M8GK5KVH8TC>
         name = re.sub(" \\(.*\\)", "", suggestion["l"])
 
-        return cls(suggestion["id"], name, suggestion["rank"], suggestion["s"], [])
+        return cls(suggestion["id"], name, suggestion["rank"] if "rank" in suggestion else 0, suggestion["s"], [])
 
 class Role:
     def __init__(self, work, year, role):

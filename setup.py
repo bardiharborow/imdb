@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="imdb-cli",
-    version="0.1.0",
+    version="0.1.1",
     author="Bardi Harborow",
     author_email="bardi@bardiharborow.com",
     description="A command-line tool for retrieving an artist's filmography from IMDb.",

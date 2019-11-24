@@ -1,6 +1,6 @@
 # imdb
 
-[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb) [![Coverage Status](https://coveralls.io/repos/github/bardiharborow/imdb/badge.svg?branch=master)](https://coveralls.io/github/bardiharborow/imdb?branch=master) [![Python Package](https://img.shields.io/static/v1?label=test%20pypi&message=v0.1.0&color=blue)](https://test.pypi.org/project/imdb-cli/)
+[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb) [![Coverage Status](https://coveralls.io/repos/github/bardiharborow/imdb/badge.svg?branch=master)](https://coveralls.io/github/bardiharborow/imdb?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/5defb91a89c1bc741183/maintainability)](https://codeclimate.com/github/bardiharborow/imdb/maintainability) [![Python Package](https://img.shields.io/static/v1?label=test%20pypi&message=v0.1.1&color=blue)](https://test.pypi.org/project/imdb-cli/)
 
 A command-line tool for retrieving an artist's filmography from [IMDb](https://www.imdb.com/).
 
