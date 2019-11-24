@@ -23,8 +23,26 @@ class TestActor(unittest.TestCase):
         self.assertEqual(str(self.actor), "Amanda Tapping, ranked 2441, known for Actress, Stargate SG-1 (1997-2007)")
 
     def test_json(self):
-        self.assertEqual(self.actor.json(), '{"identifier": "nm0850102", "name": "Amanda Tapping", "rank": 2441, "known_for": "Actress, Stargate SG-1 (1997-2007)", "filmography": [{"work": "Sanctuary", "year": "2008-2011", "role": "Dr. Helen Magnus"}]}')
-        self.assertEqual(self.actor3.json(), '{"identifier": "nm0850102", "name": "Amanda Tapping", "rank": 2441, "known_for": "Actress, Stargate SG-1 (1997-2007)", "filmography": []}')
+        self.assertEqual(self.actor.json(), """{
+    "identifier": "nm0850102",
+    "name": "Amanda Tapping",
+    "rank": 2441,
+    "known_for": "Actress, Stargate SG-1 (1997-2007)",
+    "filmography": [
+        {
+            "work": "Sanctuary",
+            "year": "2008-2011",
+            "role": "Dr. Helen Magnus"
+        }
+    ]
+}""")
+        self.assertEqual(self.actor3.json(), """{
+    "identifier": "nm0850102",
+    "name": "Amanda Tapping",
+    "rank": 2441,
+    "known_for": "Actress, Stargate SG-1 (1997-2007)",
+    "filmography": []
+}""")
 
     def test_long(self):
         self.assertEqual(self.actor.long(), "Name: Amanda Tapping\nRanked: 2441\nKnown for: Actress, Stargate SG-1 (1997-2007)\n\nFilmography (1 film):\n\nSanctuary (2008-2011), as Dr. Helen Magnus")

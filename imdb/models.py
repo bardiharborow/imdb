@@ -23,7 +23,7 @@ class Actor:
         return f"{self.name}, ranked {self.rank}, known for {self.known_for}"
 
     def json(self):
-        return json.dumps(self, default=lambda obj: obj.__dict__)
+        return json.dumps(self, default=lambda obj: obj.__dict__, indent=4)
 
     def long(self):
         filmography = "\n".join(map(lambda s: str(s).replace("\n", ""), self.filmography))

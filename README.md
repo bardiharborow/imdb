@@ -1,6 +1,6 @@
 # imdb
 
-[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb)
+[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb) [![Coverage Status](https://coveralls.io/repos/github/bardiharborow/imdb/badge.svg?branch=master)](https://coveralls.io/github/bardiharborow/imdb?branch=master)
 
 A command-line tool for retrieving an artist's filmography from [IMDb](https://www.imdb.com/).
 

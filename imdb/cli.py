@@ -1,6 +1,7 @@
 import argparse
 
 from . import api
+from . import models
 
 class CLI:
     def __init__(self):
@@ -65,21 +66,22 @@ class CLI:
         Search for actors and filmographies based on provided arguments.
         """
         if self.arguments.id:
-            raise NotImplementedError
+            # TODO: fetch details from id
+            actor = models.Actor(self.arguments.id, "", 0, "", [])
         elif self.arguments.name:
             actors = api.IMDb.actors(self.arguments.name)
+
+            if actors:
+                actor = self.choose(actors)
+            else:
+                print("No results found from IMDB.")
         else:
             # never reached as argparse will throw first
             raise RuntimeError("No search target provided.")
 
-        if actors:
-            selection = self.choose(actors)
+        actor.filmography = api.IMDb.actor(actor.identifier)
 
-            selection.filmography = api.IMDb.actor(selection.identifier)
+        if self.arguments.reverse:
+            actor.filmography.reverse()
 
-            if self.arguments.reverse:
-                selection.filmography.reverse()
-
-            self.display(selection)
-        else:
-            print("No results found from IMDB.")
+        self.display(actor)

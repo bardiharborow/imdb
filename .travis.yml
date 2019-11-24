@@ -4,10 +4,18 @@ git:
 python:
 - '3.7'
 install:
-- pip install pipenv pylint
-- pipenv sync
+- pip install pipenv coveralls pylint pytest pytest-cov
 script:
-- python -m unittest tests
+- pytest --cov=imdb/
 - pylint imdb --exit-zero
+after_success:
+- coveralls
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: rCuqkYHa/INlQ+1H/h/sp849Hgh80Lisp9L2bFqr4UhdFQ2xe+AcN+CwaRV1yzKArWzoTxWUJwiaZjqX3vVAfX2OkCMIbeyfZEgz9R6RYdD6ny0f3pUuQ8CKPddVfTC5eoHIrNhz6areE1azxSe1H+j77IyW3/AK/SDy3MjTLAGHE4WdKmaJYWILdgVh/CU80EjPsXHg6MsOpE9IN6QnVcrTJl7EqGlUU22XoJJLK5aV2A11t5qSQK8NLEa0oCDlafTK/8mWLHR1+Um6U33l1zubzTnCd6iqpa6mB1ckkhZ71/jqzwhNn3P0LPx9GP979QByndflbFP//RereKt9eseYZcxQ6kdo2JXkUc8V74G80jwGYdPGcDw80tp0+D6yhhxi87Wckv6m+iUSTawZ2AVIPRAzTlYc+HEMogNT1amdUHrdCRnR/ywT/4TMpAFKGLCy7Y3zB/KpBHfi+KGMN6/Kbat7yAt+2kslftsvrgnS6pm65eWo7CyNMMpX0ZrC7B+xLOgr5ch2aZQkyn0Z3eJr8uFEUMAHLt/7//faFkYKhikYpLamePahggdtW94dW1Z33qTHKZPD/nyz/2F4zPOUr58BDhh4mb1jtIYqDTWHD0qCcEhGcFFKVKThQlLVNHxXyYp1ehejA5PU2+Ksyn0FOMHW8AT9HQwk80b0vnA=
+  on:
+    tags: true
 notifications:
   irc: chat.freenode.net#bardiharborow
