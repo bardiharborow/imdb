@@ -2,6 +2,9 @@ import json
 import re
 
 class Actor:
+    """
+    An actor as stored in the IMDb database.
+    """
     def __init__(self, identifier, name, rank, known_for, filmography):
         self.identifier = identifier
         self.name = name
@@ -42,6 +45,9 @@ class Actor:
         return cls(suggestion["id"], name, suggestion["rank"] if "rank" in suggestion else 0, suggestion["s"], [])
 
 class Role:
+    """
+    An actor's role in a movie as stored in the IMDb database.
+    """
     def __init__(self, work, year, role):
         self.work = work
         self.year = year

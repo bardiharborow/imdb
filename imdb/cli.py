@@ -2,7 +2,6 @@ import argparse
 import sys
 
 from . import api
-from . import models
 
 class CLI:
     def __init__(self):
@@ -77,24 +76,24 @@ class CLI:
         """
         if self.arguments.id:
             try:
-                # A slightly risky way to fetch name, rank and known for
+                # a slightly risky way to fetch name, rank and known for
                 actor = api.IMDb.actors(self.arguments.id)[0]
-
-                # IMDb often doesn't return rank for ID-based searches
-                if actor.rank == 0:
-                    # search for actor by name
-                    actors = api.IMDb.actors(actor.name)
-
-                    for act in actors:
-                        # find matching actor
-                        if actor.identifier == act.identifier:
-                            # return actor with rank instead
-                            return act
-
-                # rank present or lookup failed, returning original
-                return actor
             except KeyError:
                 pass
+
+            # IMDb often doesn't return rank for ID-based searches
+            if actor.rank == 0:
+                # search for actor by name
+                actors = api.IMDb.actors(actor.name)
+
+                for act in actors:
+                    # find matching actor
+                    if actor.identifier == act.identifier:
+                        # return actor with rank instead
+                        return act
+
+            # rank present or lookup failed, returning original
+            return actor
 
         elif self.arguments.name:
             actors = api.IMDb.actors(self.arguments.name)

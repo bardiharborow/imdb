@@ -2,7 +2,8 @@
 
 import requests
 import unittest
-import unittest.mock
+
+from unittest.mock import Mock, patch
 
 from imdb.api import IMDb, IMDbFilmographyParser
 from imdb.models import Actor, Role
@@ -104,9 +105,9 @@ class TestIMDb(unittest.TestCase):
         """
 
     def test_actors(self):
-        response = unittest.mock.Mock()
+        response = Mock()
         response.text = self.suggestions_sample
-        requests.get = unittest.mock.Mock(return_value=response)
+        requests.get = Mock(return_value=response)
 
         actors = IMDb.actors("Emma Watson")
 
@@ -114,9 +115,9 @@ class TestIMDb(unittest.TestCase):
         requests.get.assert_called_with("https://v2.sg.media-imdb.com/suggestion/names/e/emma_watson.json")
 
     def test_actor(self):
-        response = unittest.mock.Mock()
+        response = Mock()
         response.text = self.complex_sample
-        requests.get = unittest.mock.Mock(return_value=response)
+        requests.get = Mock(return_value=response)
 
         filmography = IMDb.actor("nm0818055")
 

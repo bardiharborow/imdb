@@ -36,15 +36,15 @@ class IMDbFilmographyParser(html.parser.HTMLParser):
         elif self.state == 4 and tag == "div":
             self.state = 1
 
-        elif self.state == 0 or self.state == 1:
+        elif self.state in (0, 1):
             attributes = dict(attrs)
 
             if "class" in attributes:
                 classes = attributes["class"].split()
+                actor_role = "id" in attributes and attributes["id"].startswith("act")
 
                 # outside film -> inside film
-                if self.state == 0 and "filmo-row" in classes and \
-                   "id" in attributes and attributes["id"].startswith("act"):
+                if self.state == 0 and "filmo-row" in classes and actor_role:
                     self.state = 1
 
                 # inside film -> year
@@ -53,7 +53,7 @@ class IMDbFilmographyParser(html.parser.HTMLParser):
 
     def handle_endtag(self, tag):
         # inside film or role -> outside film
-        if (self.state == 1 or self.state == 4) and tag == "div":
+        if self.state in (1, 4) and tag == "div":
             role = models.Role(self.work.strip(),
                                self.year.strip(),
                                self.role.strip())
@@ -118,8 +118,8 @@ class IMDb:
                 return list(map(models.Actor.from_imdb_suggestion, payload["d"]))
             except:
                 raise RuntimeError("Parsing IMDB results failed.")
-        else:
-            raise RuntimeError("Fetching IMDB results failed.")
+
+        raise RuntimeError("Fetching IMDB results failed.")
 
     @staticmethod
     def actor(identifier):
