@@ -1,6 +1,6 @@
 # imdb
 
-[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb) [![Coverage Status](https://coveralls.io/repos/github/bardiharborow/imdb/badge.svg?branch=master)](https://coveralls.io/github/bardiharborow/imdb?branch=master)
+[![Build Status](https://travis-ci.org/bardiharborow/imdb.svg?branch=master)](https://travis-ci.org/bardiharborow/imdb) [![Coverage Status](https://coveralls.io/repos/github/bardiharborow/imdb/badge.svg?branch=master)](https://coveralls.io/github/bardiharborow/imdb?branch=master) [![Python Package](https://img.shields.io/static/v1?label=test%20pypi&message=v0.1.0&color=blue)](https://test.pypi.org/project/imdb-cli/)
 
 A command-line tool for retrieving an artist's filmography from [IMDb](https://www.imdb.com/).
 
@@ -16,6 +16,15 @@ $ imdb --name "Octavia Spencer" --reverse --json
 
 ```shell
 $ imdb --id nm0818055
+```
+
+## Install
+
+To avoid polluting the main PyPI index, this project is published on the staging PyPI. To install, follow this process.
+
+```shell
+$ pip install requests
+$ pip install --index-url https://test.pypi.org/simple/ --no-deps imdb-cli
 ```
 
 ## Caution

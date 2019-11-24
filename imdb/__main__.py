@@ -1,4 +1,7 @@
 from . import cli
 
-if __name__ == "__main__":
+def main():
     cli.CLI()
+
+if __name__ == "__main__":
+    main()
