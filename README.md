@@ -10,6 +10,14 @@ A command-line tool for retrieving an artist's filmography from [IMDb](https://w
 $ imdb --name "Octavia Spencer"
 ```
 
+```shell
+$ imdb --name "Octavia Spencer" --reverse --json
+```
+
+```shell
+$ imdb --id nm0818055
+```
+
 ## Caution
 
 This project is provided for educational purposes only and is not affiliated with IMDb. You should request explicit permission from IMDb before using the software. If you plan to engage in large-scale scraping, IMDb's [downloadable datasets](https://www.imdb.com/interfaces/) may be more suitable.

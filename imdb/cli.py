@@ -14,12 +14,12 @@ class CLI:
         """
         Parse supplied command line arguments.
         """
-        self.parser = argparse.ArgumentParser(description="IMDB cli")
+        self.parser = argparse.ArgumentParser(description="A command-line tool for retrieving an artist's filmography from IMDb.")
         group = self.parser.add_mutually_exclusive_group(required=True)
-        group.add_argument("--id", help="id")
-        group.add_argument("--name", help="name")
-        self.parser.add_argument("--reverse", action="store_true", help="reverse movie list")
-        self.parser.add_argument("--json", action="store_true", help="display JSON")
+        group.add_argument("--id", help="search by IMDb identifier")
+        group.add_argument("--name", help="search by artist name")
+        self.parser.add_argument("--reverse", action="store_true", help="display filmography in reverse order")
+        self.parser.add_argument("--json", action="store_true", help="display filmography in machine-readable JSON")
         self.arguments = self.parser.parse_args()
 
     def choose(self, options):
@@ -76,7 +76,7 @@ class CLI:
             selection = self.choose(actors)
 
             selection.filmography = api.IMDb.actor(selection.identifier)
-            
+
             if self.arguments.reverse:
                 selection.filmography.reverse()
 
